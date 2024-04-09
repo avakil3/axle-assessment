@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import { get_auth_data, set_handshake, get_policy_data } from './helper_functions.js'
 const app: Express = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Express Middleware
 app.use(express.json())
@@ -36,6 +36,6 @@ app.post('/mock-carrier/policies', async (req: Request, res: Response) => {
 
 })
 
-app.listen(port, () => {
-    console.log(`Server listening on port ${port}`)
+app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`)
 })
