@@ -1,11 +1,11 @@
 import { jwtDecode } from "jwt-decode";
 
-type userLogin = {
+type userLoginType = {
     username: string,
     password: string,
 }
 
-const get_auth_data = async (user: userLogin) => {
+const get_auth_data = async (user: userLoginType) => {
     try {
         const response = await fetch('https://6dota27wl8.execute-api.us-east-1.amazonaws.com/dev/auth', {
             method: 'POST',

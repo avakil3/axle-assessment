@@ -9,9 +9,9 @@ app.post('/mock-carrier/policies', async (req, res) => {
     if (!req.body || req.body.username == undefined || req.body.password == undefined) {
         return res.status(403).send('Username or password missing');
     }
-    const user = req.body;
+    const { username, password } = req.body;
     // Call auth endpoint 
-    const { userId, authorization, authError } = await get_auth_data(user);
+    const { userId, authorization, authError } = await get_auth_data({ username, password });
     if (authError) {
         return res.status(403).send(authError);
     }
