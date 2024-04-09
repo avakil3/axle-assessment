@@ -11,13 +11,13 @@ const get_auth_data = async (user) => {
         const responseData = await response.json();
         const jwtToken = responseData.data?.accessToken;
         if (!jwtToken) {
-            return { authError: 'Failed authentication' };
+            return { authError: 'Authentication failed' };
         }
         const decoded = jwtDecode(jwtToken);
         return { userId: decoded.userId, authorization: jwtToken };
     }
     catch (authError) {
-        return { authError };
+        return { authError: 'Authentication failed' };
     }
 };
 const set_handshake = async (userId, authorization) => {

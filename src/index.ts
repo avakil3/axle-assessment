@@ -7,32 +7,32 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-
 app.post('/mock-carrier/policies', async (req: Request, res: Response) => {
-    const user = req.body
-    if (user.username == undefined || user.password == undefined) {
-        res.status(403).send('Username or password missing')
+
+    if (!req.body || req.body.username == undefined || req.body.password == undefined) {
+        return res.status(403).send('Username or password missing')
     }
+    const { username, password } = req.body
 
     // Call auth endpoint 
-    const { userId, authorization, authError } = await get_auth_data(user)
+    const { userId, authorization, authError } = await get_auth_data({ username, password })
     if (authError) {
-        res.status(403).send('Authentication failed')
+        return res.status(403).send(authError)
     }
 
     // Call handshake endpoint 
     const { session, policyNumber, handshakeError } = await set_handshake(userId, authorization)
     if (handshakeError) {
-        res.status(403).send('Error: Failed to establish handshake')
+        return res.status(403).send(handshakeError)
     }
 
     // Call policies endpoint
     const { policyData, policyRequestError } = await get_policy_data(authorization, session, policyNumber)
     if (policyRequestError) {
-        res.status(403).send('Error: Failed to request policy data from carrier')
+        return res.status(403).send(policyRequestError)
     }
 
-    res.status(200).send(policyData)
+    return res.status(200).send(policyData)
 
 })
 

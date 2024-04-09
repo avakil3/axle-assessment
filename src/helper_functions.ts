@@ -19,7 +19,7 @@ const get_auth_data = async (user: userLogin) => {
         const jwtToken = responseData.data?.accessToken
 
         if (!jwtToken) {
-            return { authError: 'Failed authentication' }
+            return { authError: 'Authentication failed' }
         }
 
         type decodedJwtTokenType = { userId: string }
@@ -28,7 +28,7 @@ const get_auth_data = async (user: userLogin) => {
         return { userId: decoded.userId, authorization: jwtToken }
 
     } catch (authError) {
-        return { authError }
+        return { authError: 'Authentication failed' }
     }
 
 }
