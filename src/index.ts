@@ -20,11 +20,11 @@ app.post('/mock-carrier/policies', async (req: Request, res: Response) => {
 
     // Call handshake endpoint 
     const { session, policyNumber, handshakeError } = await set_handshake(userId, authorization)
-    if (handshakeError) { return res.status(403).send(handshakeError) }
+    if (handshakeError) { return res.status(525).send(handshakeError) }
 
     // Call policies endpoint
     const { policyData, policyRequestError } = await get_policy_data(authorization, session, policyNumber)
-    if (policyRequestError) { return res.status(403).send(policyRequestError) }
+    if (policyRequestError) { return res.status(500).send(policyRequestError) }
 
     return res.status(200).send(policyData)
 
