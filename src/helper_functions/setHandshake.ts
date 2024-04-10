@@ -21,6 +21,8 @@ export const setHandshake = async (userId: string, authorization: string): Promi
         }
         const { data: { session, policyNumber } } = responseData
 
+        // Store Session and PolicyNumber to database here
+
         return { session, policyNumber } as HandshakeData
 
     } catch (e) {

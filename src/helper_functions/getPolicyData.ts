@@ -51,7 +51,13 @@ export const getPolicyData = async (authorization: string, session: string, poli
 
         const responseData = await response.json();
 
+        if (!responseData.success) {
+            return { policyRequestError: responseData.message } as PolicyData
+        }
+
         const policyData = mapIncomingPolicyData(responseData.data)
+
+        // STORE TO DATABASE HERE
 
         return { policyData } as PolicyData
 
