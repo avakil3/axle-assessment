@@ -29,7 +29,7 @@ export const getAuthData = async (user: userLoginType): Promise<AuthData> => {
         const jwtToken = responseData.data?.accessToken
 
         if (!jwtToken) {
-            return { authError: "JWT missing from response body" } as AuthData
+            return { authError: "Authentication failed" } as AuthData
         }
 
         const decoded: JwtPayload = jwtDecode(jwtToken);
