@@ -1,6 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 
-type userLoginType = {
+type UserLoginType = {
     username: string,
     password: string,
 }
@@ -15,7 +15,7 @@ interface AuthData {
     authError?: string
 }
 
-export const getAuthData = async (user: userLoginType): Promise<AuthData> => {
+export const getAuthData = async (user: UserLoginType): Promise<AuthData> => {
     try {
         const response = await fetch('https://6dota27wl8.execute-api.us-east-1.amazonaws.com/dev/auth', {
             method: 'POST',
@@ -37,6 +37,8 @@ export const getAuthData = async (user: userLoginType): Promise<AuthData> => {
         if (!decoded.userId) {
             return { authError: "User ID missing from decoded JWT" } as AuthData
         }
+
+        // Store userId and authorization to database
 
         return { userId: decoded.userId, authorization: jwtToken } as AuthData
 
